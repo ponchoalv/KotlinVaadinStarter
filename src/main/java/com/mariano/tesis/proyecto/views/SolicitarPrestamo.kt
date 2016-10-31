@@ -33,6 +33,7 @@ import org.vaadin.spring.events.annotation.EventBusListenerMethod
 
 import com.mariano.tesis.proyecto.entidades.Mensaje
 import com.mariano.tesis.proyecto.Sections
+import com.mariano.tesis.proyecto.entidades.BalanceReceiver
 import com.vaadin.event.ShortcutAction
 import com.vaadin.ui.themes.ValoTheme
 import org.vaadin.spring.events.Event
@@ -66,23 +67,34 @@ constructor(
 
     private val presenter = Presenter()
 
+    private val receiver: BalanceReceiver
+
+    private val upload: Upload
+
 
     init {
+
         userName = this.vaadinSecurity.authentication.name
         eventBus.subscribe(topicListener, userName)
+
         formLayout = FormLayout()
         nombreDeUsuario = Label("Nombre de usuario conectado: " + userName)
-
 
         button = Button("Solicitar préstamo")
         button.setStyleName(ValoTheme.BUTTON_PRIMARY)
         button.setClickShortcut(ShortcutAction.KeyCode.ENTER)
-
         button.addClickListener({
             presenter.enviarNotificacion()
         })
 
+        receiver = BalanceReceiver()
+        upload = Upload("Seleccionar el archivo del balance firmado digitalmente", receiver)
+        upload.buttonCaption = "Subir Archivo"
+        upload.addSucceededListener(receiver)
+        upload.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED)
+
         formLayout.addComponent(nombreDeUsuario)
+        formLayout.addComponent(upload)
         formLayout.addComponent(button)
 
         compositionRoot = formLayout
