@@ -43,6 +43,6 @@ class AccessDeniedView : VerticalLayout(), View {
     }
 
     override fun enter(event: ViewChangeListener.ViewChangeEvent) {
-        message.value = String.format("No tiene acceso a esta vista: %s", event.viewName)
+        message.value = String.format("No tiene acceso a la vista solicitada: %s", event.viewName)
     }
 }

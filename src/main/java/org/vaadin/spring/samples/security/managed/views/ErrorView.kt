@@ -40,6 +40,6 @@ class ErrorView : VerticalLayout(), View {
     }
 
     override fun enter(event: ViewChangeListener.ViewChangeEvent) {
-        message.value = String.format("No such view: %s", event.viewName)
+        message.value = String.format("No existe la vista solicitada: %s", event.viewName)
     }
 }

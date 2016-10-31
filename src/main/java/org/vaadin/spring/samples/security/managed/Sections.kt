@@ -28,7 +28,7 @@ import org.vaadin.spring.sidebar.annotation.SideBarSections
  * @author Petter Holmström (petter@vaadin.com)
  */
 @Component
-@SideBarSections(SideBarSection(id = Sections.VIEWS, caption = "Vistas"), SideBarSection(id = Sections.OPERATIONS, caption = "Operaciones"))
+@SideBarSections(SideBarSection(id = Sections.VIEWS, caption = "Menú"), SideBarSection(id = Sections.OPERATIONS, caption = "Tareas Rápidas"))
 object Sections {
         const val VIEWS = "views"
         const val OPERATIONS = "operations"

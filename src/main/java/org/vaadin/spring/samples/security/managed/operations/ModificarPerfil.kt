@@ -25,18 +25,20 @@ import org.vaadin.spring.sidebar.annotation.FontAwesomeIcon
 import org.vaadin.spring.sidebar.annotation.SideBarItem
 
 /**
- * An operation that invokes a backend method that is available for all users.
+ * An operation that invokes a backend method that is available for admin users only. The operation is, however,
+ * always visible in the side bar to demonstrate that the security checks on the backend layer are working.
 
  * @author Petter Holmström (petter@vaadin.com)
  */
 @SpringComponent
-@SideBarItem(sectionId = Sections.OPERATIONS, caption = "Acciones de usuario", order = 0)
-@FontAwesomeIcon(FontAwesome.ANCHOR)
-class UserOperation
+@SideBarItem(sectionId = Sections.OPERATIONS, caption = "Modificar perfil", order = 0)
+@FontAwesomeIcon(FontAwesome.USER)
+class ModificarPerfil
 @Autowired
 constructor(private val backend: MyBackend) : Runnable {
 
     override fun run() {
-        Notification.show(backend.echo("Hello World"))
+        Notification.show(backend.echo("Modificación de Perfil"))
+
     }
 }

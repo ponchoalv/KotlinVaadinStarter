@@ -46,22 +46,25 @@ class LoginScreen
 @Autowired
 constructor(private val vaadinSecurity: VaadinSecurity, private val eventBus: EventBus.SessionEventBus) : CustomComponent() {
 
-    private var userName: TextField
+    private val userName: TextField
 
-    private var passwordField: PasswordField
+    private val passwordField: PasswordField
 
-    private var login: Button
+    private val login: Button
 
-    private var loginFailedLabel: Label
+    private val loginFailedLabel: Label
 
-    private var loggedOutLabel: Label
+    private val loggedOutLabel: Label
+    private val header: Label
 
     init {
-        userName = TextField("Username")
-        passwordField = PasswordField("Password")
-        login = Button("Login")
+        header = Label("Banca Empresa")
+        header.addStyleName(ValoTheme.LABEL_H1)
+        userName = TextField("Nombre de Usuario")
+        passwordField = PasswordField("Contraseña")
+        login = Button("Entrar")
         loginFailedLabel = Label()
-        loggedOutLabel = Label("Good bye!")
+        loggedOutLabel = Label("¡Tenga un buen día!")
 
         initLayout()
     }
@@ -73,6 +76,7 @@ constructor(private val vaadinSecurity: VaadinSecurity, private val eventBus: Ev
     private fun initLayout() {
         val loginForm = FormLayout()
         loginForm.setSizeUndefined()
+        loginForm.addComponent(header)
         loginForm.addComponent(userName)
         loginForm.addComponent(passwordField)
         loginForm.addComponent(login)
@@ -122,11 +126,11 @@ constructor(private val vaadinSecurity: VaadinSecurity, private val eventBus: Ev
     } catch (ex: AuthenticationException) {
         userName.focus()
         userName.selectAll()
-        loginFailedLabel.value = String.format("Login failed: %s", ex.message)
+        loginFailedLabel.value = String.format("Ha fallado el inicio de sesión: %s", ex.message)
         loginFailedLabel.isVisible = true
     } catch (ex: Exception) {
-        Notification.show("An unexpected error occurred", ex.message, Notification.Type.ERROR_MESSAGE)
-        LoggerFactory.getLogger(javaClass).error("Unexpected error while logging in", ex)
+        Notification.show("Un error inesperado ha ocurrido: ", ex.message, Notification.Type.ERROR_MESSAGE)
+        LoggerFactory.getLogger(javaClass).error("Un error inesperado a ocurrido en la pantalla de Login", ex)
     } finally {
         login.isEnabled = true
     }

@@ -47,11 +47,11 @@ import java.util.Date
  */
 @Secured("ROLE_USER", "ROLE_ADMIN")
 @SpringView(name = "user")
-@SideBarItem(sectionId = Sections.VIEWS, caption = "User View")
-@FontAwesomeIcon(FontAwesome.ARCHIVE)
+@SideBarItem(sectionId = Sections.VIEWS, caption = "Solicitar préstamo")
+@FontAwesomeIcon(FontAwesome.DOLLAR)
 @SpringComponent
 @UIScope
-open class UserView
+open class SolicitarPrestamo
 @Autowired
 constructor(
         private val vaadinSecurity: VaadinSecurity,
@@ -65,29 +65,10 @@ constructor(
 
     private val presenter = Presenter()
 
-    private val mensajeAnotificar: String
-
-    private val ventanaChat: Table
-
     init {
         userName = this.vaadinSecurity.authentication.name
         eventBus.subscribe(topicListener, userName)
         verticalLayout = VerticalLayout()
-
-        mensajeAnotificar = "Hola a todos desde Admin"
-
-        ventanaChat = Table("Ventana Chat")
-
-        ventanaChat.addContainerProperty("Recibido", Date::class.java, null)
-        ventanaChat.addContainerProperty("De", String::class.java, null)
-        ventanaChat.addContainerProperty("Mensaje", TextArea::class.java, null)
-
-        ventanaChat.isSelectable = false
-
-        ventanaChat.setHeight(500f, Sizeable.Unit.PIXELS)
-
-        verticalLayout.addComponent(ventanaChat)
-
 
         val button = Button("Enviar notificación usando el EventBus")
         button.addClickListener( {presenter.enviarNotificacion()})
@@ -113,16 +94,15 @@ constructor(
         fun mostrarMensajeRecibido(mensaje: Mensaje) {
 
             ui.access {
-                val newItemId = ventanaChat.addItem()
-                val msg = ventanaChat.getItem(newItemId)
-                msg.getItemProperty("Recibido").value = mensaje.timestamp
+
+/*                msg.getItemProperty("Recibido").value = mensaje.timestamp
                 msg.getItemProperty("De").value = mensaje.de
                 val value = TextArea()
                 value.value = mensaje.mensaje
                 value.isReadOnly = true
                 value.isWordwrap = true
                 value.setWidth(200f, Sizeable.Unit.PIXELS)
-                msg.getItemProperty("Mensaje").setValue(value)
+                msg.getItemProperty("Mensaje").setValue(value)*/
             }
         }
     }
@@ -130,7 +110,7 @@ constructor(
     internal inner class Presenter {
 
         fun enviarNotificacion() {
-            eventBus.publish(EventScope.APPLICATION, this@UserView, mensajeAnotificar)
+            //eventBus.publish(EventScope.APPLICATION, this@SolicitarPrestamo, mensajeAnotificar)
         }
 
     }
