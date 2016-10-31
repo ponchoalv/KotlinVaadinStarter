@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vaadin.spring.samples.security.managed.operations
+package com.mariano.tesis.proyecto.operations
 
 import com.vaadin.server.FontAwesome
 import com.vaadin.spring.annotation.SpringComponent
 import org.springframework.beans.factory.annotation.Autowired
 
-import org.vaadin.spring.samples.security.managed.Sections
+import com.mariano.tesis.proyecto.Sections
 
 import org.vaadin.spring.security.managed.VaadinManagedSecurity
 import org.vaadin.spring.sidebar.annotation.FontAwesomeIcon

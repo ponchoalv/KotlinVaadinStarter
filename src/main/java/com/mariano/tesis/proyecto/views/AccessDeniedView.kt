@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vaadin.spring.samples.security.managed.views
+package com.mariano.tesis.proyecto.views
 
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener

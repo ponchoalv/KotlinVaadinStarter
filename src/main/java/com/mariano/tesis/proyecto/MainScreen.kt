@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vaadin.spring.samples.security.managed
+package com.mariano.tesis.proyecto
 
 import com.vaadin.navigator.Navigator
 import com.vaadin.spring.annotation.SpringComponent
@@ -21,8 +21,8 @@ import com.vaadin.spring.annotation.UIScope
 import com.vaadin.spring.navigator.SpringViewProvider
 import com.vaadin.ui.*
 import org.springframework.beans.factory.annotation.Autowired
-import org.vaadin.spring.samples.security.managed.views.AccessDeniedView
-import org.vaadin.spring.samples.security.managed.views.ErrorView
+import com.mariano.tesis.proyecto.views.AccessDeniedView
+import com.mariano.tesis.proyecto.views.ErrorView
 import org.vaadin.spring.security.VaadinSecurity
 import org.vaadin.spring.sidebar.components.ValoSideBar
 import org.vaadin.spring.sidebar.security.VaadinSecurityItemFilter

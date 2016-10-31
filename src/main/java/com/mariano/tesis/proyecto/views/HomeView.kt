@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vaadin.spring.samples.security.managed.views
+package com.mariano.tesis.proyecto.views
 
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
@@ -23,7 +23,7 @@ import com.vaadin.spring.annotation.SpringView
 import com.vaadin.ui.Label
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.themes.ValoTheme
-import org.vaadin.spring.samples.security.managed.Sections
+import com.mariano.tesis.proyecto.Sections
 import org.vaadin.spring.sidebar.annotation.FontAwesomeIcon
 import org.vaadin.spring.sidebar.annotation.SideBarItem
 

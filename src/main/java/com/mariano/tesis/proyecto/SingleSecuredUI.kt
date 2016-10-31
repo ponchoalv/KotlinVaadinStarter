@@ -1,8 +1,9 @@
-package org.vaadin.spring.samples.security.managed
+package com.mariano.tesis.proyecto
 
 import com.vaadin.annotations.Push
 import com.vaadin.annotations.Theme
 import com.vaadin.server.DefaultErrorHandler
+import com.vaadin.server.ErrorEvent
 import com.vaadin.server.VaadinRequest
 import com.vaadin.shared.communication.PushMode
 import com.vaadin.shared.ui.ui.Transport
@@ -34,7 +35,7 @@ class SingleSecuredUI : UI() {
 
         // Let's register a custom error handler to make the 'access denied' messages a bit friendlier.
         errorHandler = object : DefaultErrorHandler() {
-            override fun error(event: com.vaadin.server.ErrorEvent) {
+            override fun error(event: ErrorEvent) {
                 if (SecurityExceptionUtils.isAccessDeniedException(event.throwable)) {
                     Notification.show("Sorry, you don't have access to do that.")
                 } else {

@@ -13,20 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vaadin.spring.samples.security.managed.backend
+package com.mariano.tesis.proyecto.entidades
 
-import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.stereotype.Service
+import com.mariano.tesis.proyecto.repositorios.MyBackend
 
 /**
- * Example backend interface with [org.springframework.security.access.prepost.PreAuthorize] annotations.
+
 
  * @author Petter Holmström (petter@vaadin.com)
  */
-interface MyBackend {
+@Service
+open class MyBackendBean : MyBackend {
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    fun adminOnlyEcho(s: String): String
+    override fun adminOnlyEcho(s: String): String {
+        return "admin:" + s
+    }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    fun echo(s: String): String
+    override fun echo(s: String): String {
+        return s
+    }
 }

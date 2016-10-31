@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vaadin.spring.samples.security.managed.views
+package com.mariano.tesis.proyecto.views
 
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
@@ -26,8 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.annotation.Secured
 import org.vaadin.spring.events.EventBus
 import org.vaadin.spring.events.EventScope
-import org.vaadin.spring.samples.security.managed.Entidades.Mensaje
-import org.vaadin.spring.samples.security.managed.Sections
+import com.mariano.tesis.proyecto.entidades.Mensaje
+import com.mariano.tesis.proyecto.Sections
 import org.vaadin.spring.security.VaadinSecurity
 import org.vaadin.spring.sidebar.annotation.FontAwesomeIcon
 import org.vaadin.spring.sidebar.annotation.SideBarItem
@@ -48,8 +48,8 @@ import java.util.Date
 open class AdminView
 @Autowired
 constructor(
-           val vaadinSecurity: VaadinSecurity,
-           val eventBus: EventBus.SessionEventBus) : VerticalLayout(), View {
+        val vaadinSecurity: VaadinSecurity,
+        val eventBus: EventBus.SessionEventBus) : VerticalLayout(), View {
 
     private val inputChatText: TextField
     private val inputUserDestination: ComboBox

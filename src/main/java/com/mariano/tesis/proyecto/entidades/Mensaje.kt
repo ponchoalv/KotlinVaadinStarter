@@ -1,4 +1,4 @@
-package org.vaadin.spring.samples.security.managed.Entidades
+package com.mariano.tesis.proyecto.entidades
 
 import java.util.Date
 

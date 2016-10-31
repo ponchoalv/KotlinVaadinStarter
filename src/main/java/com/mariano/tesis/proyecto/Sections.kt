@@ -15,7 +15,7 @@
  */
 @file:Suppress("FinalClassOrFunSpring")
 
-package org.vaadin.spring.samples.security.managed
+package com.mariano.tesis.proyecto
 
 
 import org.springframework.stereotype.Component

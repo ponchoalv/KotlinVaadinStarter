@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vaadin.spring.samples.security.managed
+package com.mariano.tesis.proyecto
 
 import com.vaadin.server.CustomizedSystemMessages
 import com.vaadin.server.SystemMessagesProvider
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -30,7 +31,7 @@ import org.vaadin.spring.security.config.AuthenticationManagerConfigurer
 
  * @author Petter Holmström (petter@vaadin.com)
  */
-@SpringBootApplication(exclude = arrayOf(org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration::class))
+@SpringBootApplication(exclude = arrayOf(SecurityAutoConfiguration::class))
 @EnableVaadinManagedSecurity
 open class Application {
 
