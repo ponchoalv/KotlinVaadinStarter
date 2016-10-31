@@ -17,10 +17,6 @@ package com.mariano.tesis.proyecto.repositorios
 
 import org.springframework.security.access.prepost.PreAuthorize
 
-/**
-
- * @author Petter Holmström (petter@vaadin.com)
- */
 interface MyBackend {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

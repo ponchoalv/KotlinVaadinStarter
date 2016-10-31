@@ -26,17 +26,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.vaadin.spring.security.annotation.EnableVaadinManagedSecurity
 import org.vaadin.spring.security.config.AuthenticationManagerConfigurer
 
-/**
- * Main entry point into the demo application.
 
- * @author Petter Holmström (petter@vaadin.com)
- */
 @SpringBootApplication(exclude = arrayOf(SecurityAutoConfiguration::class))
 @EnableVaadinManagedSecurity
 open class Application {
 
     /**
-     * Provide custom system messages to make sure the application is reloaded when the session expires.
+     * Mensages personalizados para el error de sesión.
      */
     @Bean
     internal open fun systemMessagesProvider(): SystemMessagesProvider {
@@ -48,13 +44,13 @@ open class Application {
     }
 
     /**
-     * Configure the authentication manager.
+     * configurar el administrador de credenciales (por el momento solo en memoria se utilizan)
      */
        @Configuration
     internal open class AuthenticationConfiguration : AuthenticationManagerConfigurer {
 
         override fun configure(auth: AuthenticationManagerBuilder) {
-            auth.inMemoryAuthentication().withUser("user").password("user").roles("USER").and().withUser("admin").password("admin").roles("ADMIN")
+            auth.inMemoryAuthentication().withUser("cliente_empresa").password("cliente_empresa").roles("USER").and().withUser("admin").password("admin").roles("ADMIN")
         }
     }
 

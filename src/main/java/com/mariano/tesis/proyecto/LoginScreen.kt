@@ -35,11 +35,6 @@ import org.vaadin.spring.events.EventBus
 import org.vaadin.spring.security.VaadinSecurity
 import org.vaadin.spring.security.util.SuccessfulLoginEvent
 
-/**
- * Full-screen UI component that allows the user to login.
-
- * @author Petter Holmström (petter@vaadin.com)
- */
 @PrototypeScope
 @SpringComponent
 class LoginScreen

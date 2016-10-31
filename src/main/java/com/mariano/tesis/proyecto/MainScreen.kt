@@ -27,11 +27,7 @@ import org.vaadin.spring.security.VaadinSecurity
 import org.vaadin.spring.sidebar.components.ValoSideBar
 import org.vaadin.spring.sidebar.security.VaadinSecurityItemFilter
 
-/**
- * Full-screen UI component that allows the user to navigate between views, and log out.
 
- * @author Petter Holmström (petter@vaadin.com)
- */
 @UIScope
 @SpringComponent
 class MainScreen

@@ -27,11 +27,6 @@ import com.mariano.tesis.proyecto.Sections
 import org.vaadin.spring.sidebar.annotation.FontAwesomeIcon
 import org.vaadin.spring.sidebar.annotation.SideBarItem
 
-/**
- * When the user logs in and there is no view to navigate to, this view will be shown.
-
- * @author Petter Holmström (petter@vaadin.com)
- */
 @SpringView(name = "")
 @SideBarItem(sectionId = Sections.VIEWS, caption = "Inicio", order = 0)
 @FontAwesomeIcon(FontAwesome.HOME)

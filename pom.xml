@@ -8,9 +8,9 @@
 	</parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>security-sample-managed</artifactId>
+    <artifactId>proyecto-mariano-graziano</artifactId>
 
-    <name>Vaadin4Spring Samples - Vaadin Managed Security</name>
+    <name>Proyecto Final - Mariano Graziano</name>
 
     <properties>
         <kotlin.version>1.0.4</kotlin.version>

@@ -33,20 +33,17 @@ import org.vaadin.spring.events.annotation.EventBusListenerMethod
 
 import com.mariano.tesis.proyecto.entidades.Mensaje
 import com.mariano.tesis.proyecto.Sections
+import com.vaadin.event.ShortcutAction
+import com.vaadin.ui.themes.ValoTheme
+import org.vaadin.spring.events.Event
 
 import org.vaadin.spring.security.VaadinSecurity
 import org.vaadin.spring.sidebar.annotation.FontAwesomeIcon
 import org.vaadin.spring.sidebar.annotation.SideBarItem
 
-import java.util.Date
 
-/**
- * View that is available for all users.
-
- * @author Petter Holmström (petter@vaadin.com)
- */
 @Secured("ROLE_USER", "ROLE_ADMIN")
-@SpringView(name = "user")
+@SpringView(name = "solicitarPrestamo")
 @SideBarItem(sectionId = Sections.VIEWS, caption = "Solicitar préstamo")
 @FontAwesomeIcon(FontAwesome.DOLLAR)
 @SpringComponent
@@ -57,27 +54,40 @@ constructor(
         private val vaadinSecurity: VaadinSecurity,
         private val eventBus: EventBus.SessionEventBus) : CustomComponent(), View {
     //private final MyBackend backend;
-    private val verticalLayout: VerticalLayout
+    private val formLayout: FormLayout
 
     private val userName: String
+
+    private val nombreDeUsuario: Label
+
+    private val button: Button
 
     private val topicListener = EventsSubcriber()
 
     private val presenter = Presenter()
 
+
     init {
         userName = this.vaadinSecurity.authentication.name
         eventBus.subscribe(topicListener, userName)
-        verticalLayout = VerticalLayout()
+        formLayout = FormLayout()
+        nombreDeUsuario = Label("Nombre de usuario conectado: " + userName)
 
-        val button = Button("Enviar notificación usando el EventBus")
-        button.addClickListener( {presenter.enviarNotificacion()})
 
-        verticalLayout.addComponent(button)
+        button = Button("Solicitar préstamo")
+        button.setStyleName(ValoTheme.BUTTON_PRIMARY)
+        button.setClickShortcut(ShortcutAction.KeyCode.ENTER)
 
-        compositionRoot = verticalLayout
+        button.addClickListener({
+            presenter.enviarNotificacion()
+        })
 
-    }//this.backend = backend;
+        formLayout.addComponent(nombreDeUsuario)
+        formLayout.addComponent(button)
+
+        compositionRoot = formLayout
+
+    }
 
     override fun detach() {
         eventBus.unsubscribe(this)
@@ -91,11 +101,11 @@ constructor(
     internal inner class EventsSubcriber {
 
         @EventBusListenerMethod
-        fun mostrarMensajeRecibido(mensaje: Mensaje) {
+        fun mostrarMensajeRecibido(mensaje: String) {
 
             ui.access {
 
-/*                msg.getItemProperty("Recibido").value = mensaje.timestamp
+/*              msg.getItemProperty("Recibido").value = mensaje.timestamp
                 msg.getItemProperty("De").value = mensaje.de
                 val value = TextArea()
                 value.value = mensaje.mensaje
@@ -103,6 +113,8 @@ constructor(
                 value.isWordwrap = true
                 value.setWidth(200f, Sizeable.Unit.PIXELS)
                 msg.getItemProperty("Mensaje").setValue(value)*/
+
+                Notification.show("Solicitud de Préstamo Enviada")
             }
         }
     }
@@ -110,7 +122,7 @@ constructor(
     internal inner class Presenter {
 
         fun enviarNotificacion() {
-            //eventBus.publish(EventScope.APPLICATION, this@SolicitarPrestamo, mensajeAnotificar)
+            eventBus.publish(EventScope.SESSION, userName, this, "")
         }
 
     }

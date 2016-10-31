@@ -25,11 +25,6 @@ import org.vaadin.spring.security.managed.VaadinManagedSecurity
 import org.vaadin.spring.sidebar.annotation.FontAwesomeIcon
 import org.vaadin.spring.sidebar.annotation.SideBarItem
 
-/**
- * Operation that logs the user out.
-
- * @author Petter Holmström (petter@vaadin.com)
- */
 @SpringComponent
 @SideBarItem(sectionId = Sections.OPERATIONS, caption = "Salir")
 @FontAwesomeIcon(FontAwesome.POWER_OFF)

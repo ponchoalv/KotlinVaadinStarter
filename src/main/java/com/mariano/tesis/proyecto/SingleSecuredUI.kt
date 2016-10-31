@@ -31,13 +31,13 @@ class SingleSecuredUI : UI() {
     lateinit var eventBus: EventBus.SessionEventBus
 
     override fun init(request: VaadinRequest) {
-        page.setTitle("Vaadin Managed Security Demo")
+        page.setTitle("Portal de autogestión de Banca Empresa")
 
         // Let's register a custom error handler to make the 'access denied' messages a bit friendlier.
         errorHandler = object : DefaultErrorHandler() {
             override fun error(event: ErrorEvent) {
                 if (SecurityExceptionUtils.isAccessDeniedException(event.throwable)) {
-                    Notification.show("Sorry, you don't have access to do that.")
+                    Notification.show("Acceso restringido.")
                 } else {
                     super.error(event)
                 }

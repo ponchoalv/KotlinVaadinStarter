@@ -34,11 +34,7 @@ import org.vaadin.spring.sidebar.annotation.SideBarItem
 
 import java.util.Date
 
-/**
- * View that is available to administrators only.
 
- * @author Petter Holmström (petter@vaadin.com)
- */
 @Secured("ROLE_ADMIN")
 @SpringView(name = "admin")
 @SpringComponent

@@ -23,16 +23,11 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.themes.ValoTheme
 
-/**
- * View that is shown when the user attempts to access a restricted view.
-
- * @author Petter Holmström (petter@vaadin.com)
- */
 @SpringComponent
 @UIScope
 class AccessDeniedView : VerticalLayout(), View {
 
-    private var message: Label
+    private val message: Label
 
     init {
         setMargin(true)

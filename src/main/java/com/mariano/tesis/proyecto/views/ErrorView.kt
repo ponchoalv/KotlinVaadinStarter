@@ -21,15 +21,10 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.themes.ValoTheme
 
-/**
- * View that is shown when the user tries to navigate to a view that does not exist. Please not
- * this view is not Spring-managed; the Navigator will take care of instantiating it when needed.
 
- * @author Petter Holmström (petter@vaadin.com)
- */
 class ErrorView : VerticalLayout(), View {
 
-    private var message: Label
+    private val message: Label
 
     init {
         setMargin(true)

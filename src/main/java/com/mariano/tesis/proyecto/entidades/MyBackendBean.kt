@@ -18,11 +18,7 @@ package com.mariano.tesis.proyecto.entidades
 import org.springframework.stereotype.Service
 import com.mariano.tesis.proyecto.repositorios.MyBackend
 
-/**
 
-
- * @author Petter Holmström (petter@vaadin.com)
- */
 @Service
 open class MyBackendBean : MyBackend {
 

@@ -24,12 +24,7 @@ import com.mariano.tesis.proyecto.repositorios.MyBackend
 import org.vaadin.spring.sidebar.annotation.FontAwesomeIcon
 import org.vaadin.spring.sidebar.annotation.SideBarItem
 
-/**
- * An operation that invokes a backend method that is available for admin users only. The operation is, however,
- * always visible in the side bar to demonstrate that the security checks on the backend layer are working.
 
- * @author Petter Holmström (petter@vaadin.com)
- */
 @SpringComponent
 @SideBarItem(sectionId = Sections.OPERATIONS, caption = "Modificar perfil", order = 0)
 @FontAwesomeIcon(FontAwesome.USER)
