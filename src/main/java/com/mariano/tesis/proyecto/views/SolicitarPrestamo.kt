@@ -31,16 +31,19 @@ import org.vaadin.spring.events.EventBus
 import org.vaadin.spring.events.EventScope
 import org.vaadin.spring.events.annotation.EventBusListenerMethod
 
-import com.mariano.tesis.proyecto.entidades.Mensaje
 import com.mariano.tesis.proyecto.Sections
-import com.mariano.tesis.proyecto.entidades.BalanceReceiver
 import com.vaadin.event.ShortcutAction
+import com.vaadin.server.Page
 import com.vaadin.ui.themes.ValoTheme
 import org.vaadin.spring.events.Event
 
 import org.vaadin.spring.security.VaadinSecurity
 import org.vaadin.spring.sidebar.annotation.FontAwesomeIcon
 import org.vaadin.spring.sidebar.annotation.SideBarItem
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 
 @Secured("ROLE_USER", "ROLE_ADMIN")
@@ -78,7 +81,9 @@ constructor(
         eventBus.subscribe(topicListener, userName)
 
         formLayout = FormLayout()
+        formLayout.defaultComponentAlignment = Alignment.TOP_LEFT
         nombreDeUsuario = Label("Nombre de usuario conectado: " + userName)
+        nombreDeUsuario.setStyleName(ValoTheme.LABEL_BOLD)
 
         button = Button("Solicitar préstamo")
         button.setStyleName(ValoTheme.BUTTON_PRIMARY)
@@ -87,11 +92,12 @@ constructor(
             presenter.enviarNotificacion()
         })
 
-        receiver = BalanceReceiver()
+        receiver = BalanceReceiver(userName)
         upload = Upload("Seleccionar el archivo del balance firmado digitalmente", receiver)
         upload.buttonCaption = "Subir Archivo"
+        upload.isImmediate = true
         upload.addSucceededListener(receiver)
-        upload.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED)
+        upload.setStyleName(ValoTheme.BUTTON_ICON_ALIGN_RIGHT)
 
         formLayout.addComponent(nombreDeUsuario)
         formLayout.addComponent(upload)
@@ -117,15 +123,6 @@ constructor(
 
             ui.access {
 
-/*              msg.getItemProperty("Recibido").value = mensaje.timestamp
-                msg.getItemProperty("De").value = mensaje.de
-                val value = TextArea()
-                value.value = mensaje.mensaje
-                value.isReadOnly = true
-                value.isWordwrap = true
-                value.setWidth(200f, Sizeable.Unit.PIXELS)
-                msg.getItemProperty("Mensaje").setValue(value)*/
-
                 Notification.show("Solicitud de Préstamo Enviada")
             }
         }
@@ -137,5 +134,32 @@ constructor(
             eventBus.publish(EventScope.SESSION, userName, this, "")
         }
 
+    }
+
+    inner class BalanceReceiver(userName: String) : Upload.Receiver, Upload.SucceededListener {
+        val baseUrl = "C:\\Temp\\"
+        val separetor: String = java.io.File.separator
+
+        override fun receiveUpload(filename: String?, mimeType: String?): OutputStream {
+            val fos: FileOutputStream
+
+            try{
+                val dir = File(baseUrl + userName)
+                dir.mkdir()
+                val file = File(baseUrl + userName + separetor + filename)
+                fos = FileOutputStream(file)
+            } catch (e: FileNotFoundException) {
+                Notification("No se pudo abrir el archivo",
+                        e.message,
+                        Notification.Type.ERROR_MESSAGE)
+                        .show(Page.getCurrent())
+                return null!!
+            }
+            return fos
+        }
+
+        override fun uploadSucceeded(p0: Upload.SucceededEvent?) {
+            Notification("Se subio el archivo satisfactoriamente").show(Page.getCurrent())
+        }
     }
 }

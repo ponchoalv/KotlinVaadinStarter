@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.annotation.Secured
 import org.vaadin.spring.events.EventBus
 import org.vaadin.spring.events.EventScope
-import com.mariano.tesis.proyecto.entidades.Mensaje
 import com.mariano.tesis.proyecto.Sections
 import org.vaadin.spring.security.VaadinSecurity
 import org.vaadin.spring.sidebar.annotation.FontAwesomeIcon
