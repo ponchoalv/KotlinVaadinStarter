@@ -79,11 +79,13 @@ constructor(
     internal inner class Presenter {
 
         fun enviarMensajeAUsuario() {
-            val mensaje = Mensaje(inputChatText.value, vaadinSecurity.authentication.name, inputUserDestination.value as String, Date())
+/*
+           val mensaje = Mensaje(inputChatText.value, vaadinSecurity.authentication.name, inputUserDestination.value as String, Date())
 
             eventBus.publish(EventScope.APPLICATION,
                     mensaje.para, this,
                     mensaje)
+*/
 
         }
 

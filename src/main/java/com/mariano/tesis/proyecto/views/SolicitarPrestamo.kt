@@ -34,6 +34,7 @@ import org.vaadin.spring.events.annotation.EventBusListenerMethod
 import com.mariano.tesis.proyecto.Sections
 import com.vaadin.event.ShortcutAction
 import com.vaadin.server.Page
+import com.vaadin.shared.ui.label.ContentMode
 import com.vaadin.ui.themes.ValoTheme
 import org.vaadin.spring.events.Event
 
@@ -74,6 +75,7 @@ constructor(
 
     private val upload: Upload
 
+    private val estadoArchivo: Label
 
     init {
 
@@ -82,8 +84,8 @@ constructor(
 
         formLayout = FormLayout()
         formLayout.defaultComponentAlignment = Alignment.TOP_LEFT
-        nombreDeUsuario = Label("Nombre de usuario conectado: " + userName)
-        nombreDeUsuario.setStyleName(ValoTheme.LABEL_BOLD)
+        nombreDeUsuario = Label("<b>Nombre de usuario conectado: </b>" + userName)
+        nombreDeUsuario.contentMode = ContentMode.HTML
 
         button = Button("Solicitar préstamo")
         button.setStyleName(ValoTheme.BUTTON_PRIMARY)
@@ -94,13 +96,17 @@ constructor(
 
         receiver = BalanceReceiver(userName)
         upload = Upload("Seleccionar el archivo del balance firmado digitalmente", receiver)
-        upload.buttonCaption = "Subir Archivo"
+        upload.buttonCaption = "Seleccionar archivo..."
         upload.isImmediate = true
         upload.addSucceededListener(receiver)
-        upload.setStyleName(ValoTheme.BUTTON_ICON_ALIGN_RIGHT)
+
+        estadoArchivo = Label("Seleccionar archivo...")
+
+        estadoArchivo.isVisible = false
 
         formLayout.addComponent(nombreDeUsuario)
         formLayout.addComponent(upload)
+        formLayout.addComponent(estadoArchivo)
         formLayout.addComponent(button)
 
         compositionRoot = formLayout
@@ -136,7 +142,7 @@ constructor(
 
     }
 
-    inner class BalanceReceiver(userName: String) : Upload.Receiver, Upload.SucceededListener {
+    internal inner class BalanceReceiver(userName: String) : Upload.Receiver, Upload.SucceededListener {
         val baseUrl = "C:\\Temp\\"
         val separetor: String = java.io.File.separator
 
@@ -159,6 +165,11 @@ constructor(
         }
 
         override fun uploadSucceeded(p0: Upload.SucceededEvent?) {
+            estadoArchivo.value = "Se ha subido el archivo: " + p0!!.filename
+            estadoArchivo.icon = FontAwesome.CHECK_CIRCLE_O
+            estadoArchivo.isVisible = true
+            upload.isEnabled = false
+            upload.isVisible = false
             Notification("Se subio el archivo satisfactoriamente").show(Page.getCurrent())
         }
     }
