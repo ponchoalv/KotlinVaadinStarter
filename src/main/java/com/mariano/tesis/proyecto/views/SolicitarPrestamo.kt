@@ -19,7 +19,6 @@ package com.mariano.tesis.proyecto.views
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
 import com.vaadin.server.FontAwesome
-import com.vaadin.server.Sizeable
 import com.vaadin.spring.annotation.SpringComponent
 import com.vaadin.spring.annotation.SpringView
 import com.vaadin.spring.annotation.UIScope
@@ -32,11 +31,11 @@ import org.vaadin.spring.events.EventScope
 import org.vaadin.spring.events.annotation.EventBusListenerMethod
 
 import com.mariano.tesis.proyecto.Sections
+import com.vaadin.data.util.TextFileProperty
 import com.vaadin.event.ShortcutAction
 import com.vaadin.server.Page
 import com.vaadin.shared.ui.label.ContentMode
 import com.vaadin.ui.themes.ValoTheme
-import org.vaadin.spring.events.Event
 
 import org.vaadin.spring.security.VaadinSecurity
 import org.vaadin.spring.sidebar.annotation.FontAwesomeIcon
@@ -59,7 +58,7 @@ constructor(
         private val vaadinSecurity: VaadinSecurity,
         private val eventBus: EventBus.SessionEventBus) : CustomComponent(), View {
     //private final MyBackend backend;
-    private val formLayout: FormLayout
+    private val verticalLayout: VerticalLayout
 
     private val userName: String
 
@@ -77,39 +76,70 @@ constructor(
 
     private val estadoArchivo: Label
 
+    private val patrimonio: TextField
+
+    private val pasivo: TextField
+
+    private val ingresos: TextField
+
     init {
 
         userName = this.vaadinSecurity.authentication.name
         eventBus.subscribe(topicListener, userName)
 
-        formLayout = FormLayout()
-        formLayout.defaultComponentAlignment = Alignment.TOP_LEFT
-        nombreDeUsuario = Label("<b>Nombre de usuario conectado: </b>" + userName)
+        verticalLayout = VerticalLayout()
+
+        nombreDeUsuario = Label("<b>Usuario conectado: </b>" + userName)
         nombreDeUsuario.contentMode = ContentMode.HTML
 
+        patrimonio = TextField("Ingresar total patrimonio: ")
+        pasivo = TextField("Ingresar total pasivo: ")
+        ingresos = TextField("Ingresar total ingresos: ")
+
         button = Button("Solicitar préstamo")
-        button.setStyleName(ValoTheme.BUTTON_PRIMARY)
+        button.addStyleName(ValoTheme.BUTTON_PRIMARY)
         button.setClickShortcut(ShortcutAction.KeyCode.ENTER)
         button.addClickListener({
             presenter.enviarNotificacion()
         })
 
         receiver = BalanceReceiver(userName)
-        upload = Upload("Seleccionar el archivo del balance firmado digitalmente", receiver)
+        upload = Upload("Último balance firmado digitalmente", receiver)
         upload.buttonCaption = "Seleccionar archivo..."
         upload.isImmediate = true
         upload.addSucceededListener(receiver)
+        upload.setWidth("200px")
+
 
         estadoArchivo = Label("Seleccionar archivo...")
 
         estadoArchivo.isVisible = false
 
-        formLayout.addComponent(nombreDeUsuario)
-        formLayout.addComponent(upload)
-        formLayout.addComponent(estadoArchivo)
-        formLayout.addComponent(button)
+        verticalLayout.addComponent(nombreDeUsuario)
+        verticalLayout.addComponent(ingresos)
+        verticalLayout.addComponent(pasivo)
+        verticalLayout.addComponent(patrimonio)
+        verticalLayout.addComponent(upload)
+        verticalLayout.addComponent(estadoArchivo)
+        verticalLayout.addComponent(button)
 
-        compositionRoot = formLayout
+        verticalLayout.defaultComponentAlignment = Alignment.MIDDLE_LEFT
+        verticalLayout.setComponentAlignment(button, Alignment.MIDDLE_RIGHT)
+
+        verticalLayout.setMargin(true)
+        verticalLayout.isSpacing = true
+        verticalLayout.setWidth("400px")
+
+        val rootLayout = VerticalLayout()
+
+        rootLayout.setSizeFull()
+
+        rootLayout.addComponent(verticalLayout)
+        rootLayout.setComponentAlignment(verticalLayout, Alignment.TOP_LEFT)
+        rootLayout.setMargin(true)
+        rootLayout.isSpacing = true
+
+        compositionRoot = rootLayout
 
     }
 
@@ -142,7 +172,7 @@ constructor(
 
     }
 
-    internal inner class BalanceReceiver(userName: String) : Upload.Receiver, Upload.SucceededListener {
+    internal inner class BalanceReceiver(val nombreUsuario: String) : Upload.Receiver, Upload.SucceededListener {
         val baseUrl = "C:\\Temp\\"
         val separetor: String = java.io.File.separator
 
@@ -150,27 +180,28 @@ constructor(
             val fos: FileOutputStream
 
             try{
-                val dir = File(baseUrl + userName)
+                val dir = File(baseUrl + nombreUsuario)
                 dir.mkdir()
-                val file = File(baseUrl + userName + separetor + filename)
+                val file = File(baseUrl + nombreUsuario + separetor + filename)
                 fos = FileOutputStream(file)
             } catch (e: FileNotFoundException) {
                 Notification("No se pudo abrir el archivo",
                         e.message,
                         Notification.Type.ERROR_MESSAGE)
                         .show(Page.getCurrent())
-                return null!!
+                return FileOutputStream("")
             }
             return fos
         }
 
         override fun uploadSucceeded(p0: Upload.SucceededEvent?) {
-            estadoArchivo.value = "Se ha subido el archivo: " + p0!!.filename
-            estadoArchivo.icon = FontAwesome.CHECK_CIRCLE_O
+            estadoArchivo.value = "<b> Se ha subido el archivo: </b>" + p0!!.filename
             estadoArchivo.isVisible = true
+            estadoArchivo.contentMode = ContentMode.HTML
             upload.isEnabled = false
             upload.isVisible = false
             Notification("Se subio el archivo satisfactoriamente").show(Page.getCurrent())
         }
+
     }
 }

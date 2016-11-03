@@ -16,6 +16,7 @@
 package com.mariano.tesis.proyecto
 
 import com.vaadin.event.ShortcutAction
+import com.vaadin.shared.ui.MarginInfo
 import com.vaadin.spring.annotation.SpringComponent
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
@@ -54,7 +55,8 @@ constructor(private val vaadinSecurity: VaadinSecurity, private val eventBus: Ev
 
     init {
         header = Label("Banca Empresa")
-        header.addStyleName(ValoTheme.LABEL_H1)
+        header.addStyleName(ValoTheme.LABEL_H2)
+        header.addStyleName(ValoTheme.LABEL_COLORED)
         userName = TextField("Nombre de Usuario")
         passwordField = PasswordField("Contraseña")
         login = Button("Entrar")
@@ -71,19 +73,27 @@ constructor(private val vaadinSecurity: VaadinSecurity, private val eventBus: Ev
     private fun initLayout() {
         val loginForm = FormLayout()
         loginForm.setSizeUndefined()
+        loginForm.margin = MarginInfo(true)
+
+        userName.isRequired = true
+        passwordField.isRequired = true
+
         loginForm.addComponent(header)
         loginForm.addComponent(userName)
         loginForm.addComponent(passwordField)
         loginForm.addComponent(login)
-
+        loginForm.setComponentAlignment(login, Alignment.MIDDLE_RIGHT)
 
         login.addStyleName(ValoTheme.BUTTON_PRIMARY)
         login.isDisableOnClick = true
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER)
         login.addClickListener { login() }
 
+
+
         val loginLayout = VerticalLayout()
         loginLayout.setSizeUndefined()
+
         loginLayout.addComponent(loginFailedLabel)
         loginLayout.setComponentAlignment(loginFailedLabel, Alignment.BOTTOM_CENTER)
 
@@ -104,6 +114,7 @@ constructor(private val vaadinSecurity: VaadinSecurity, private val eventBus: Ev
         loginLayout.setComponentAlignment(loginForm, Alignment.TOP_CENTER)
 
         val rootLayout = VerticalLayout(loginLayout)
+
         rootLayout.setSizeFull()
         rootLayout.setComponentAlignment(loginLayout, Alignment.MIDDLE_CENTER)
         compositionRoot = rootLayout
